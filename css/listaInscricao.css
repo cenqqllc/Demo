@@ -1,0 +1,132 @@
+   /* Conteúdo Principal */
+    .content {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    /* Tabela de Alunos */
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      background-color: #f0f0f0;
+      padding: 10px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .header-item {
+      flex: 1;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .payment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .aluno-item {
+      display: flex;
+      justify-content: space-between;
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .aluno-item div {
+      flex: 1;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Botão de Exclusão */
+    .delete-button {
+      display: none;
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      background: #fff;
+      border: none;
+    }
+
+    .aluno-item:hover .delete-button {
+      display: block;
+    }
+
+    .delete-button img {
+      width: 20px;
+      height: 20px;
+    }
+        
+.lista-de-pagamentos nav .pesquisar{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    width: 280px;
+    background:  #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: flex;
+  }
+.lista-de-pagamentos nav input{
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    outline: none;
+}
+.lista-de-pagamentos nav .pesquisar:hover{
+    border: 1px solid rgba(0, 123, 255, .4);
+  }
+.lista-de-pagamentos nav .pesquisar input:focus ~ .lista-de-pagamentos nav .Pesquisar{
+    outline: none;
+    border-color: #007bff;
+    outline: 3px solid rgba(0, 123, 255, .4);
+  }
+  .lista-de-pagamentos nav .pesquisar button{
+    padding: 10px 15px;
+    font-size: 16px;
+    background: transparent;
+    cursor: pointer;
+    color: white;
+    border: none;
+  }
+
+  .search-results {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 10px;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  .close-btn {
+    cursor: pointer;
+    text-align: right;
+    font-size: 18px;
+  }
+
+  .search-results ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .search-results li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+  }
