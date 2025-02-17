@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de gestão escolar">
+    <title>Cadastrar novo Aluno</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="assets/img/favicon.png">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/addaluno.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Função para inicializar a validação do campo "Código"
+    function initializeCodigoValidation() {
+        const codigoInput = document.getElementById('codigo');
+        if (codigoInput) {
+            // Adiciona o evento de validação
+            codigoInput.addEventListener('input', function (event) {
+                const input = event.target;
+                let value = input.value.toUpperCase(); // Converte tudo para maiúsculas automaticamente
+                let newValue = '';
+                let isValid = true;
+
+                // Percorre cada caractere do valor atual do campo
+                for (let i = 0; i < value.length; i++) {
+                    const char = value[i];
+
+                    if (i < 9 && !isNaN(char)) { // Os primeiros 9 caracteres devem ser números
+                        newValue += char;
+                    } else if (i >= 9 && i <= 10 && /[A-Z]/.test(char)) { // Caracteres 10 e 11 devem ser letras maiúsculas
+                        newValue += char;
+                    } else if (i >= 11 && i <= 13 && !isNaN(char)) { // Caracteres 12, 13 e 14 devem ser números
+                        newValue += char;
+                    } else {
+                        isValid = false; // Marca como inválido se algum caractere não atender às regras
+                    }
+                }
+
+                // Limita o comprimento do campo a 14 caracteres
+                if (newValue.length > 14) {
+                    newValue = newValue.slice(0, 14);
+                }
+
+                // Atualiza o valor do campo com os caracteres válidos
+                input.value = newValue;
+
+                // Adiciona ou remove a classe 'invalid' dependendo da validade
+                if (!isValid || newValue.length !== 14) {
+                    input.classList.add('invalid');
+                } else {
+                    input.classList.remove('invalid');
+                }
+            });
+        }
+    }
+
+    // Chama a função de inicialização após o DOM ser carregado
+    initializeCodigoValidation();
+});
+    </script>
+</head>
+<body>
+    <div class="sidebar">
+    <h2 class="logo-name">
+      <img src="assets/img/favicon.png" alt="" srcset="">
+      <p>GSchool<span class="dot">.</span></p>
+    </h2>
+    <nav>
+      <ul>
+        <span>Opções de secretaria</span>
+        <li class="active"><img src="assets/svg/add-person.svg" alt=""><a href="ficha-inscricao.html">Ficha de Inscrição</a></li>
+        <li><img src="assets/svg/profe.svg" alt=""><a href="alunos-inscritos.html">Alunos Inscritos</a></li>
+        <li><img src="assets/svg/togle.svg" alt=""><a href="pagamentos.html">Pagamentos</a></li>
+        <li><img src="assets/svg/house.svg" alt=""><a href="controle-pagamentos.html">Controle de Pagamentos</a></li>
+        <li><img src="assets/svg/chart.svg" alt=""><a href="painel.html">Painel</a></li>
+      </ul>
+    </nav>
+  </div>
+   <!-- Conteúdo Principal -->
+   <main class="content">
+     <form id="addAlunoForm" class="add-aluno-form">
+   <h2>Matriculando um novo estudante</h2>
+   <ul class="blk-display">
+     <li>
+       <label for="nome">Nome completo</label>
+       <input class="i-pri" type="text" id="nome" required>
+     </li>
+     <li>
+       <label for="telefone">Telefone</label>
+       <input class="i-pri" maxlength="9" type="tel" id="telefone" required>
+     </li>
+     <li>
+       <label for="telefone-ecd">Telefone (secundário)</label>
+       <input class="i-pri" maxlength="9" type="tel" id="telefone-scd">
+     </li>
+     <li>
+       <label for="date-nasci">Data de nascimento </label>
+       <input class="i-pri" type="date" id="date-nasci" required>
+     </li>
+  </ul>
+  <ul class="flx-diplay">
+     <li>
+       <label for="crs">Curso</label>
+       <select id="crs" required>
+         <option value="Informática">Informática</option>
+         <option value="Electricidade">Electricidade</option>
+         <option value="Enfermagem">Enfermagem</option>
+         <option value="Análises clínicas">Análises clínicas</option>
+         <option value="Farmácia">Farmácia</option>
+       </select>
+     </li>
+     <li>
+       <label for="período">Período</label>
+       <select id="periodo" name="Periodo" required>
+         <option value="Manhã">Manhã</option>
+         <option value="Tarde">Tarde</option>
+       </select>
+     </li>
+     <li>
+       <label for="Turma">Turma</label>
+       <select id="Turma" required>
+         <option value="A">A</option>
+         <option value="B">B</option>
+       </select>
+     </li>
+   </ul>
+   <div class="bi">
+     <label for="classe">Selecione a classe </label>
+     <select id="classe" name="classe" required>
+       <option value="10ª">10ª</option>
+       <option value="11ª">11ª</option>
+       <option value="12ª">12ª</option>
+       <option value="13ª">13ª</option>
+     </select>
+   </div>
+   <ul class="generos">
+     <label>Gênero</label>
+     <li>
+         <input id="masculino" type="radio" name="genero" required>
+         <label for="masculino">Masculino</label>
+     </li>
+     <li>
+         <input id="feminino" type="radio" name="genero" required>
+         <label for="feminino">Feminino</label>
+     </li>
+  </ul>
+  <div class="bi">
+     <label for="codigo">Portador de BI (formato: 123456789AZ876)</label>
+     <input style="letter-spacing: 5px;" type="text" id="codigo" name="codigo" maxlength="14">
+  </div> 
+  <div class="bi">
+       <label for="dataInscri">Data de inscrição  </label>
+     <input style="letter-spacing: 5px;" type="datetime-local"  name="dataInscri" maxlength="30" id="dataInscri">
+  </div>
+  <div class="endereco">
+     <label for="enderecoOTG">Endereço</label>
+     <input type="text" id="enderecoOTG" placeholder="Ex: Luanda - Avenida Paulo Jorge - Nº 123" required>
+  </div>
+
+  <button id="addAluno" type="submit">
+     Cadastrar
+     <img src="assets/svg/plus-circle.svg" alt="">
+  </button>
+  
+</form>
+
+   </main>     
+   <script src="src/script/addEstudante.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
+
+        // Your Firebase configuration  (REPLACE WITH YOUR ACTUAL KEYS)
+        const firebaseConfig = {
+            apiKey: "AIzaSyDclL0jLxf0wnPneWqSjLV7xxw0E_nUGiE",
+            authDomain: "escola-secretaria.firebaseapp.com",
+            databaseURL: "https://escola-secretaria-default-rtdb.firebaseio.com",
+            projectId: "escola-secretaria",
+            storageBucket: "escola-secretaria.firebasestorage.app",
+            messagingSenderId: "574013844708",
+            appId: "1:574013844708:web:eceb883af38b3d1a6cd0f1",
+            measurementId: "G-C4YL6PXZFQ"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const analytics = getAnalytics(app);
+
+
+        // Função para coletar dados do formulário
+        function getFormData() {
+          return {
+            nome: document.getElementById('nome').value,
+            telefone: document.getElementById('telefone').value,
+            telefoneSecundario: document.getElementById('telefone-scd').value,
+            dataNascimento: document.getElementById('date-nasci').value,
+            curso: document.getElementById('crs').value,
+            periodo: document.getElementById('periodo').value,
+            turma: document.getElementById('Turma').value,
+            classe: document.getElementById('classe').value,
+            genero: document.querySelector('input[name="genero"]:checked')?.id || null, // Pega o ID do rádio selecionado ou null se nenhum estiver selecionado.
+            bi: document.getElementById('codigo').value,
+            dataInscri: document.getElementById('dataInscri').value,
+            endereco: document.getElementById('enderecoOTG').value
+          };
+        }
+
+        // Adiciona o event listener ao botão com o ID correto
+const addAlunoButton = document.getElementById('addAluno');
+addAlunoButton.addEventListener('click', async (e) => {
+  e.preventDefault();
+
+  const alunoData = getFormData();
+
+  // Validação básica (adicione mais validações conforme necessário)
+  if (!alunoData.nome || !alunoData.telefone || !alunoData.dataNascimento || !alunoData.genero) {
+    alert('Por favor, preencha todos os campos obrigatórios.');
+    return;
+  }
+
+  // Limpa espaços em branco e caracteres especiais do nome para usar como chave
+  const nomeLimpo = alunoData.nome.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+
+  try {
+    const newAlunoRef = ref(database, `Alunos_cadastrados/${nomeLimpo}`); // Nova referência com o nome do aluno
+    await set(newAlunoRef, alunoData);
+    alert('Aluno cadastrado com sucesso!');
+    document.getElementById('addAlunoForm').reset();
+  } catch (error) {
+    console.error('Erro ao cadastrar aluno:', error);
+    alert('Erro ao cadastrar aluno. Por favor, tente novamente. Detalhes do erro: ' + error.message);
+  }
+});
+
+    </script>
+    
+
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema de gestão escolar">
+  <title>Home | GSchool</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/img/favicon.png">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/painel.css">
+  <!-- Importando Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="config/config.css">
+  <link rel="stylesheet" href="config/emergence.config.css">
+</head>
+<body>
+  <div class="sidebar">
+    <h2 class="logo-name">
+      <img src="assets/img/favicon.png" alt="" srcset="">
+      <p>GSchool<span class="dot">.</span></p>
+    </h2>
+    <nav>
+      <ul>
+        <span>Opções de secretaria</span>
+        <li><img src="assets/svg/add-person.svg" alt=""><a href="ficha-inscricao.html">Ficha de Inscrição</a></li>
+        <li><img src="assets/svg/profe.svg" alt=""><a href="alunos-inscritos.html">Alunos Inscritos</a></li>
+        <li><img src="assets/svg/togle.svg" alt=""><a href="pagamentos.html">Pagamentos</a></li>
+        <li><img src="assets/svg/house.svg" alt=""><a href="controle-pagamentos.html">Alunos Inscritos</a></li>
+        <li class="active"><img src="assets/svg/chart.svg" alt=""><a href="painel.html">Painel</a></li>
+      </ul>
+    </nav>
+  </div>
+  <!-- Conteúdo Principal -->
+  <main class="content">
+     <div>
+       <h3>Distribuição de Classes, Turmas e Períodos</h3>
+       <canvas id="combinedChart">
+          <script type="module" src="config/kombo.config.js"></script>
+       </canvas>
+     </div>
+  <div>
+      <br>
+    <h3>Contactos de emergência </h3>
+    <br>
+  </div>
+    <div class="payments-container">
+      <div class="table-header">
+        <div class="header-item">Nome</div>
+        <div class="header-item">Telefone</div>
+        <div class="header-item">Telefone Secundário</div>
+        <div class="header-item">Endereço</div>
+      </div>
+
+      <div id="alunoList" class="aluno-list"></div>
+      <script type="module" src="config/emergence.config.js"></script>
+    </div>
+    </div>
+</main>
+
+</body>
+</html>

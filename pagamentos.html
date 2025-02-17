@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de gestão escolar">
+    <title>Pagamentos </title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="assets/img/favicon.png">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/pagamentos.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2 class="logo-name">
+            <img src="assets/img/favicon.png" alt="" srcset="">
+            <p>GSchool<span class="dot">.</span></p>
+        </h2>
+        <nav>
+            <ul>
+                <span>Opções de secretaria</span>
+                <li><img src="assets/svg/add-person.svg" alt=""><a href="ficha-inscricao.html">Ficha de Inscrição</a></li>
+                <li><img src="assets/svg/profe.svg" alt=""><a href="alunos-inscritos.html">Alunos Inscritos</a></li>
+                <li class="active"><img src="assets/svg/togle.svg" alt=""><a href="pagamentos.html">Pagamentos</a></li>
+                <li><img src="assets/svg/house.svg" alt=""><a href="controle-pagamentos.html">Controle de Pagamentos</a></li>
+                <li><img src="assets/svg/chart.svg" alt=""><a href="painel.html">Painel</a></li>
+            </ul>
+        </nav>
+    </div>
+    <!-- Conteúdo Principal -->
+    <main class="content">
+        <div class="form-container">
+            <h2>Ficha de Pagamento</h2>
+            <form id="pagamentoform">
+                <!-- Nome Completo -->
+                <label for="nome-completo">Nome Completo</label>
+                <input type="text" id="nome-completo" name="nome-completo" required>
+                
+                <!-- Classe -->
+                <br><br>
+                <label for="classe">Classe</label>
+                <select id="classe" name="classe" required>
+                    <option value="10ª">10ª</option>
+                    <option value="11ª">11ª</option>
+                    <option value="12ª">12ª</option>
+                    <option value="13ª">13ª</option>
+                </select>
+                
+                <!-- Mês a ser Pago -->
+                <br><br>
+                <label for="mes-pago">Mês a ser Pago</label>
+                <input type="month" id="mes-pago" name="mes-pago" required>
+                
+                <!-- Curso -->
+                <br><br>
+                <label for="crs">Curso</label>
+                <select id="crs" name="crs" required>
+                    <option value="Informática">Informática</option>
+                    <option value="Eletricidade">Eletricidade</option>
+                    <option value="Enfermagem">Enfermagem</option>
+                    <option value="Farmácia">Farmácia</option>
+                    <option value="Análises Clínicas">Análises Clínicas</option>
+                </select>
+                
+                <!-- Data do Pagamento -->
+                <br><br>
+                <label for="dataPagamento">Data do pagamento:</label>
+                <input type="date" id="dataPagamento" name="dataPagamento" required>
+                
+                <!-- Valor -->
+                <br><br>
+                <label for="valor">Adicionar valor AKZ</label>
+                <input type="number" id="valor" name="valor" step="0.01" min="0" required>
+                
+                <!-- Botões -->
+                <br><br>
+                <div class="button-container">
+                    <button id="registrarPagamento" type="submit">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </main>   
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
+
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDclL0jLxf0wnPneWqSjLV7xxw0E_nUGiE",
+            authDomain: "escola-secretaria.firebaseapp.com",
+            databaseURL: "https://escola-secretaria-default-rtdb.firebaseio.com",
+            projectId: "escola-secretaria",
+            storageBucket: "escola-secretaria.firebasestorage.app",
+            messagingSenderId: "574013844708",
+            appId: "1:574013844708:web:eceb883af38b3d1a6cd0f1",
+            measurementId: "G-C4YL6PXZFQ"
+        };
+
+        // Inicialização do Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const analytics = getAnalytics(app);
+
+        // Função para coletar dados do formulário
+        function getFormData() {
+            return {
+                nomeCompleto: document.getElementById('nome-completo').value.trim(),
+                classe: document.getElementById('classe').value,
+                mesPago: document.getElementById('mes-pago').value,
+                curso: document.getElementById('crs').value,
+                dataPagamento: document.getElementById('dataPagamento').value,
+                valor: parseFloat(document.getElementById('valor').value)
+            };
+        }
+
+        // Manipulador de envio do formulário
+        const pagamentoForm = document.getElementById('pagamentoform');
+        pagamentoForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const pagamentoData = getFormData();
+
+            // Validação básica
+            if (!pagamentoData.nomeCompleto || !pagamentoData.classe || !pagamentoData.mesPago || 
+                !pagamentoData.curso || !pagamentoData.dataPagamento || isNaN(pagamentoData.valor) || 
+                pagamentoData.valor <= 0) {
+                alert('Por favor, preencha todos os campos obrigatórios e insira um valor válido.');
+                return;
+            }
+
+            // Limpa espaços em branco e caracteres especiais do nome para usar como chave
+            const nomeLimpo = pagamentoData.nomeCompleto.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+            try {
+                const pagamentoRef = ref(database, `Ficha_de_pagamento/${nomeLimpo}`);
+                await set(pagamentoRef, pagamentoData);
+                alert('Pagamento registrado com sucesso!');
+                pagamentoForm.reset();
+            } catch (error) {
+                console.error('Erro ao registrar pagamento:', error);
+                let errorMessage = 'Erro ao registrar pagamento.';
+                if (error.code === 'PERMISSION_DENIED') {
+                    errorMessage += ' Verifique as permissões do Firebase.';
+                } else if (error.code === 'NETWORK_ERROR') {
+                    errorMessage += ' Problema de conexão com a internet.';
+                }
+                alert(errorMessage);
+            }
+        });
+    </script>
+</body>
+</html>

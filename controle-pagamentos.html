@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de gestão escolar">
+    <title>Controle de pagamento</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="assets/img/favicon.png">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/listaPagamentos.css">
+    <link rel="stylesheet" href="css/listaInscricao.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+    <h2 class="logo-name">
+      <img src="assets/img/favicon.png" alt="" srcset="">
+      <p>GSchool<span class="dot">.</span></p>
+    </h2>
+    <nav>
+      <ul>
+        <span>Opções de secretaria</span>
+        <li><img src="assets/svg/add-person.svg" alt=""><a href="ficha-inscricao.html">Ficha de Inscrição</a></li>
+        <li><img src="assets/svg/profe.svg" alt=""><a href="alunos-inscritos.html">Alunos Inscritos</a></li>
+        <li><img src="assets/svg/togle.svg" alt=""><a href="pagamentos.html">Pagamentos</a></li>
+        <li class="active"><img src="assets/svg/house.svg" alt=""><a href="controle-pagamentos.html">Controle de Pagamentos</a></li>
+        <li><img src="assets/svg/chart.svg" alt=""><a href="painel.html">Painel</a></li>
+      </ul>
+    </nav>
+  </div>
+   <!-- Conteúdo Principal -->
+   <main class="content">
+    <div class="payments-container">
+      <div class="table-header">
+        <div class="header-item">Nome</div>
+        <div class="header-item">Classe</div>
+        <div class="header-item">Curso</div>
+        <div class="header-item">Mês</div>
+        <div class="header-item">Valor</div>
+        <div class="header-item">Data</div>
+      </div>
+  
+      <div id="paymentList" class="payment-list"></div>
+    </div>
+</div>
+
+   </main>   
+   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
+
+    // Configuração do Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDclL0jLxf0wnPneWqSjLV7xxw0E_nUGiE",
+        authDomain: "escola-secretaria.firebaseapp.com",
+        databaseURL: "https://escola-secretaria-default-rtdb.firebaseio.com",
+        projectId: "escola-secretaria",
+        storageBucket: "escola-secretaria.firebasestorage.app",
+        messagingSenderId: "574013844708",
+        appId: "1:574013844708:web:eceb883af38b3d1a6cd0f1",
+        measurementId: "G-C4YL6PXZFQ"
+    };
+
+    // Inicialização do Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // Referência ao nó `Ficha_de_pagamento`
+    const pagamentoRef = ref(database, 'Ficha_de_pagamento');
+
+    // Elementos DOM
+    const paymentListContainer = document.getElementById('paymentList');
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResultsList');
+    const closeSearchResultsBtn = document.getElementById('closeSearchResults');
+
+// Função para renderizar a lista de pagamentos
+function renderPaymentList(pagamentos) {
+    paymentListContainer.innerHTML = ''; // Limpa a lista anterior
+
+    if (pagamentos.length === 0) {
+        paymentListContainer.innerHTML = '<p>Nenhum pagamento registrado.</p>';
+        return;
+    }
+
+    pagamentos.forEach((pagamento) => {
+        const paymentItem = document.createElement('div');
+        paymentItem.className = 'payment-item';
+
+        paymentItem.innerHTML = `
+            <div>${pagamento.nomeCompleto}</div>
+            <div>${pagamento.classe}</div> <!-- Nova coluna para a classe -->
+            <div>${pagamento.curso}</div>
+            <div>${pagamento.mesPago.split('-')[1]}</div>
+            <div>${pagamento.valor} AKZ</div>
+            <div>${pagamento.dataPagamento.split('T')[0]}</div>
+        `;
+
+        paymentListContainer.appendChild(paymentItem);
+    });
+}
+
+    // Função para buscar pagamentos no Firebase
+    function fetchPayments() {
+        onValue(pagamentoRef, (snapshot) => {
+            const pagamentos = [];
+
+            snapshot.forEach((childSnapshot) => {
+                const key = childSnapshot.key;
+                const data = childSnapshot.val();
+
+                // Adiciona um ID único ao pagamento
+                data.id = key;
+                pagamentos.push(data);
+            });
+
+            // Ordena os pagamentos por data de pagamento (mais recentes primeiro)
+            pagamentos.sort((a, b) => new Date(b.dataPagamento) - new Date(a.dataPagamento));
+
+            // Renderiza a lista de pagamentos
+            renderPaymentList(pagamentos);
+        });
+    }
+
+    // Carrega a lista inicial de pagamentos
+    fetchPayments();
+</script>
+</body>
+</html>
