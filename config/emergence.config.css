@@ -1,0 +1,36 @@
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      background-color: #f0f0f0;
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    .header-item {
+      flex: 1;
+      text-align: center;
+    }
+
+    .aluno-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .aluno-item {
+      display: flex;
+      justify-content: space-between;
+      background-color: #f9f9f9;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .aluno-item div {
+      flex: 1;
+      text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
