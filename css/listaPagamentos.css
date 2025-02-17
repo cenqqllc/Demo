@@ -1,0 +1,47 @@
+
+ .lista-de-pagamentos {
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+  }
+  .lista-de-pagamentos nav{
+    width: 100%;
+    height: 80px;
+  }
+  .payments-container {
+    margin-top: 30px;
+    cursor: default;
+  }
+
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f0f0f0;
+    padding: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .header-item {
+    width: 18%;text-align: center;
+  }
+
+  .payment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .payment-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .payment-item div {
+    width: 18%;
+    text-align: center;
+  }
