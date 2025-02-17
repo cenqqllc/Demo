@@ -1,0 +1,106 @@
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #000;
+  cursor: default;
+  font-family: 'Helvetica', Arial, sans-serif;
+  list-style: none;
+  text-decoration: none;
+}
+* > input{
+  cursor: pointer;
+}
+html,body{
+  width: 100%;
+  height: auto;
+}
+body{
+  display: flex;
+  font-family: 'Arial', sans-serif;
+  margin: 8px;
+  padding: 10px;
+  background-color: #f4f7fa;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #fff;
+  height: 95vh;
+  border-radius: 10px;
+  box-shadow: 3px 15px 15px rgba(0, 0, 0, 0.1);
+}
+
+.logo-name{
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+.logo-name p{
+  align-items: center;
+  justify-content: center;
+  cursor: not-allowed;
+}
+.logo-name img{
+  width: 40px;
+  height: 44px;
+  border-radius: 10px;
+  margin: 8px;
+  cursor: not-allowed;
+}
+.logo-name .dot{
+  font-size: 2rem;
+  color: #007bff;
+}
+.sidebar nav{
+  margin-top: 2rem;
+}
+.sidebar nav ul {
+  list-style: none;
+}
+.sidebar nav ul span{
+  margin: 15px 0;
+  padding: 25px;
+  font-weight: 700;
+  display: flex;
+}
+.sidebar nav ul li {
+  margin: 15px 0;
+  padding: 8px 25px;
+  color: #007bff;
+  cursor: pointer;
+  transition: background 0.3s;
+  display: flex;
+  aling-items: center;
+  border-radius: 0 10px 10px 0;
+  display: flex;
+}
+.sidebar nav ul li a{
+    display: flex;
+    margin-left: 15px;
+}
+.sidebar nav ul li:hover{
+  background: rgba(0, 0, 0, 0.05);
+  border-left: 2px solid #0056b3;
+  transform: .10s;
+}
+
+.sidebar nav ul li.active {
+  border-left: 2px solid #007bff;
+  font-size: 800;
+}
+ul li p{
+    padding-left: 15px;
+}
+.content{
+  flex-grow: 1;
+  flex: 2fr;
+  display: block;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 95vh;
+  overflow-y: auto;
+}
