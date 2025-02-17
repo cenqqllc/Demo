@@ -1,0 +1,37 @@
+.content{
+    align-items: center;
+    padding: 15px;
+    display: block;
+}
+.content img{   
+  height:30%;
+	width:100%;
+	background-image:url("assets/img/bg.jpg");
+	background-size:cover;
+	background-position:center;
+	background-repeat:no-repeat;
+	position:relative;
+	border-radius: 10px;
+}
+.content img:hover{
+    filter: blur(3px);
+}
+.content .bg div{
+  width: 700px;
+	height: auto;
+	padding: 10px  10px;
+	text-align: center;
+	-webkit-transition: all 0.4s ease;
+	-moz-transition: all 0.4s ease;
+	transition: all 0.4s ease;
+	border-radius: 3px;
+	border: none;
+	background: #fff;
+	color: #2C2D3F;
+	position: fixed;
+	top: 20%;
+	margin-left: 10px;
+}
+.bg div:hover{
+    box-shadow: 3px 10px 5px #0000001a;
+}
